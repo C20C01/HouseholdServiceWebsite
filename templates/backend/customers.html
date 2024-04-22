@@ -7,26 +7,24 @@
 <body>
 <a href="./">返回</a>
 <h1>客户信息</h1>
-{% block content %}
-    <table>
+<table>
+    <tr>
+        <th>ID</th>
+        <th>用户名</th>
+        <th>下单次数</th>
+        <th>完成订单次数</th>
+        <th>注册时间</th>
+        <th>上次登录时间</th>
+    </tr>
+    {% for customer in customers %}
         <tr>
-            <th>ID</th>
-            <th>用户名</th>
-            <th>下单次数</th>
-            <th>完成订单次数</th>
-            <th>注册时间</th>
-            <th>上次登录时间</th>
+            <td>{{ customer.id }}</td>
+            <td>{{ customer.username }}</td>
+            <td>{{ customer.customer_info.order_count }}</td>
+            <td>{{ customer.customer_info.order_success_count }}</td>
+            <td>{{ customer.date_joined }}</td>
+            <td>{{ customer.last_login }}</td>
         </tr>
-        {% for customer in customers %}
-            <tr>
-                <td>{{ customer.id }}</td>
-                <td>{{ customer.username }}</td>
-                <td>{{ customer.customer_info.order_count }}</td>
-                <td>{{ customer.customer_info.order_success_count }}</td>
-                <td>{{ customer.date_joined }}</td>
-                <td>{{ customer.last_login }}</td>
-            </tr>
-        {% endfor %}
-    </table>
-{% endblock %}
+    {% endfor %}
+</table>
 </body>

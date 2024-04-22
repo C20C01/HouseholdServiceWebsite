@@ -12,7 +12,6 @@
     <h2>没有订单</h2>
 {% else %}
     <h2>最近的20条历史订单</h2>
-    {% block content %}
         <table>
             <tr>
                 <th>订单号码</th>
@@ -37,7 +36,6 @@
                 </tr>
             {% endfor %}
         </table>
-    {% endblock %}
 {% endif %}
 </body>
 </html>

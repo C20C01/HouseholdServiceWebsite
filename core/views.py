@@ -7,7 +7,7 @@ from core.models import Service
 
 
 def index_request(request):
-    return render(request, "index.html", {'services': Service.objects.all()})
+    return render(request, "core/index.html", {'services': Service.objects.all()})
 
 
 def login_request(request):

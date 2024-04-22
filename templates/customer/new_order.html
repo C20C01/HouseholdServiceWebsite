@@ -29,13 +29,11 @@
         <br>
         服务项目：
         <br>
-        {% block content %}
-            {% for service in services %}
-                <input type="checkbox" name="services" value="{{ service.name }}">{{ service.name }}：{{ service.price }}
-                元/小时
-                <br>
-            {% endfor %}
-        {% endblock %}
+        {% for service in services %}
+            <input type="checkbox" name="services" value="{{ service.name }}">{{ service.name }}：{{ service.price }}
+            元/小时
+            <br>
+        {% endfor %}
         <br>
         <br>
         订单备注[非必填项]：

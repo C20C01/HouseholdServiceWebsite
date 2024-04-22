@@ -7,41 +7,39 @@
 <body>
 <a href="./">返回</a>
 <h1>订单信息</h1>
-{% block content %}
-    <table>
-        <tr>
-            <th>订单ID</th>
-            <th>下单客户</th>
-            <th>联系电话</th>
-            <th>订单地址</th>
-            <th>预约时间</th>
-            <th>预约项目</th>
-            <th>订单状态</th>
-            <th>接单员工</th>
-            <th>订单备注</th>
-            <th>态度评分</th>
-            <th>质量评分</th>
-            <th>总体评分</th>
-            <th>评价</th>
+<table>
+    <tr>
+        <th>订单ID</th>
+        <th>下单客户</th>
+        <th>联系电话</th>
+        <th>订单地址</th>
+        <th>预约时间</th>
+        <th>预约项目</th>
+        <th>订单状态</th>
+        <th>接单员工</th>
+        <th>订单备注</th>
+        <th>态度评分</th>
+        <th>质量评分</th>
+        <th>总体评分</th>
+        <th>评价</th>
 
+    </tr>
+    {% for order in orders %}
+        <tr>
+            <td>{{ order.id }}</td>
+            <td>{{ order.customer }}</td>
+            <td>{{ order.phone }}</td>
+            <td>{{ order.address }}</td>
+            <td>{{ order.start_time }} - {{ order.end_time }}</td>
+            <td>{{ order.services }}</td>
+            <td>{{ order.get_status_display }}</td>
+            <td>{{ order.worker }}</td>
+            <td>{{ order.remark }}</td>
+            <td>{{ order.review.attitude_score }}</td>
+            <td>{{ order.review.quality_score }}</td>
+            <td>{{ order.review.overall_score }}</td>
+            <td>{{ order.review.comment }}</td>
         </tr>
-        {% for order in orders %}
-            <tr>
-                <td>{{ order.id }}</td>
-                <td>{{ order.customer }}</td>
-                <td>{{ order.phone }}</td>
-                <td>{{ order.address }}</td>
-                <td>{{ order.start_time }} - {{ order.end_time }}</td>
-                <td>{{ order.services }}</td>
-                <td>{{ order.get_status_display }}</td>
-                <td>{{ order.worker }}</td>
-                <td>{{ order.remark }}</td>
-                <td>{{ order.review.attitude_score }}</td>
-                <td>{{ order.review.quality_score }}</td>
-                <td>{{ order.review.overall_score }}</td>
-                <td>{{ order.review.comment }}</td>
-            </tr>
-        {% endfor %}
-    </table>
-{% endblock %}
+    {% endfor %}
+</table>
 </body>
