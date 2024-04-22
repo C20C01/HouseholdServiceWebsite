@@ -1,0 +1,43 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>历史订单</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+<a href="./">返回</a>
+<h1>历史订单</h1>
+{% if orders|length == 0 %}
+    <h2>没有订单</h2>
+{% else %}
+    <h2>最近的20条历史订单</h2>
+    {% block content %}
+        <table>
+            <tr>
+                <th>订单号码</th>
+                <th>订单地址</th>
+                <th>预约时间</th>
+                <th>预约项目</th>
+                <th>接单员工</th>
+                <th>订单备注</th>
+                <th>操作</th>
+            </tr>
+            {% for order in orders %}
+                <tr>
+                    <td>{{ order.id }}</td>
+                    <td>{{ order.address }}</td>
+                    <td>{{ order.start_time }} - {{ order.end_time }}</td>
+                    <td>{{ order.services }}</td>
+                    <td>{{ order.worker }}</td>
+                    <td>{{ order.description }}</td>
+                    <td>
+                        <a href="./?page=review_order_page&order_id={{ order.id }}&next=./?page=history_order_page">评价</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endblock %}
+{% endif %}
+</body>
+</html>

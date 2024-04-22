@@ -1,0 +1,20 @@
+<html lang="en">
+<head>
+    <title>Login</title>
+</head>
+<body>
+<h1>登录</h1>
+<form action="{% url 'login' %}" method="post">
+    {% csrf_token %}
+    <label>
+        <input type="text" name="name" placeholder="用户名" required>
+        <br>
+        <input type="password" name="password" placeholder="密码" required>
+        <br>
+        <input type="hidden" name="next" value="{{ next }}">
+        <input type="submit" value="登录">
+    </label>
+</form>
+<a href="{% url 'register' %}">注册</a>
+</body>
+</html>

@@ -1,0 +1,29 @@
+{% load static %}
+<html lang="en">
+<head>
+    <title>家政服务平台</title>
+    <link rel="stylesheet" type="text/css" href="{% static "style.css" %}">
+</head>
+<body>
+<h1>家政服务平台</h1>
+<h2>服务项目</h2>
+{% block content %}
+    <table>
+        <tr>
+            <th>项目</th>
+            <th>价格（元/小时）</th>
+        </tr>
+        {% for service in services %}
+            <tr>
+                <td>{{ service.name }}</td>
+                <td>{{ service.price }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
+<h2>服务入口</h2>
+<ul>
+    <li><a href="./customer">客户</a></li>
+    <li><a href="./worker">家政人员</a></li>
+</ul>
+</body>

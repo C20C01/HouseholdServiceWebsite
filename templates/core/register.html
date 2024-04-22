@@ -1,0 +1,23 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+</head>
+<body>
+<h1>注册</h1>
+<form action="{% url 'register' %}" method="post">
+    {% csrf_token %}
+    <label>
+        <input type="text" name="name" placeholder="用户名" required>
+        <br>
+        <input type="password" name="password" placeholder="密码" required>
+        <br>
+        <input type="radio" name="role" value="worker" required>家政人员
+        <input type="radio" name="role" value="customer" required>用户
+        <br>
+        <input type="submit" value="注册">
+    </label>
+</form>
+<a href="{% url 'login' %}">登录</a>
+</body>
+</html>

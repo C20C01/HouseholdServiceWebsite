@@ -1,0 +1,58 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>员工端</title>
+    <link rel="stylesheet" type="text/css" href="{% static "style.css" %}">
+</head>
+<body>
+<h1>员工端</h1>
+<button onclick="location.reload();">刷新</button>
+<br>
+{% if current_order %}
+    <h2>当前订单</h2>
+    <ul>
+        <li>订单号码：{{ current_order.id }}</li>
+        <li>订单地址：{{ current_order.address }}</li>
+        <li>预约时间：{{ current_order.start_time }} - {{ current_order.end_time }}</li>
+        <li>下单客户：{{ current_order.customer }}</li>
+        <li>联系电话：{{ current_order.phone }}</li>
+        <li>预约项目：{{ current_order.services }}</li>
+        <li>订单备注：{% if current_order.remark %}{{ current_order.remark }}{% else %}无{% endif %}</li>
+    </ul>
+{% elif unaccepted_orders %}
+    <h2>最近20条可接受的订单</h2>
+    {% block content %}
+        <table>
+            <tr>
+                <th>订单号码</th>
+                <th>订单地址</th>
+                <th>预约时间</th>
+                <th>预约项目</th>
+                <th>订单备注</th>
+                <th>操作</th>
+            </tr>
+            {% for order in unaccepted_orders %}
+                <tr>
+                    <td>{{ order.id }}</td>
+                    <td>{{ order.address }}</td>
+                    <td>{{ order.start_time }} - {{ order.end_time }}</td>
+                    <td>{{ order.services }}</td>
+                    <td>{{ order.description }}</td>
+                    <td>
+                        <form id="acceptOrderForm" action="{% url 'worker' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="task" value="accept_order">
+                            <input type="hidden" name="order_id" value="{{ order.id }}">
+                        </form>
+                        <a href="#" onclick="document.getElementById('acceptOrderForm').submit();">接受</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    {% endblock %}
+{% else %}
+    <h2>没有订单</h2>
+{% endif %}
+</body>
+</html>

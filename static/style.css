@@ -1,0 +1,38 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    /*display: inline-block;*/
+    border: 1px solid #000;
+}
+
+li {
+    display: block;
+    text-align: left;
+    padding: 8px 16px;
+}
+
+li:nth-child(even) {
+    background-color: #f2f2f2;
+}

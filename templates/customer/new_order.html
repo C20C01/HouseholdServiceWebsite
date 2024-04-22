@@ -1,0 +1,83 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>新建订单</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+<a href="./">返回</a>
+<h1>新建订单</h1>
+<form action="{% url 'customer' %}" method="post">
+    {% csrf_token %}
+    <label>
+        基本信息：
+        <br>
+        <input type="text" name="address" placeholder="服务地址" required>
+        <br>
+        <input type="text" name="phone" placeholder="联系电话" required>
+        <br>
+        <br>
+        服务时间：
+        <br>
+        <input type="date" name="date" required>
+        <br>
+        <input type="time" name="start" required>
+        至
+        <input type="time" name="end" required>
+        <br>
+        <br>
+        服务项目：
+        <br>
+        {% block content %}
+            {% for service in services %}
+                <input type="checkbox" name="services" value="{{ service.name }}">{{ service.name }}：{{ service.price }}
+                元/小时
+                <br>
+            {% endfor %}
+        {% endblock %}
+        <br>
+        <br>
+        订单备注[非必填项]：
+        <br>
+        <textarea name="remark" rows="5" cols="30" style="resize: none;"></textarea>
+        <br>
+        <br>
+        <input type="hidden" value="new_order" name="task">
+        <input type="submit" value="提交订单" onclick="return validateForm()">
+    </label>
+</form>
+<script>
+    function validateForm() {
+        const phone = document.getElementsByName('phone')[0].value;
+        if (!/^1[3456789]\d{9}$/.test(phone)) {
+            alert('请正确填写手机号');
+            return false;
+        }
+
+        const services = document.getElementsByName('services');
+        for (let i = 0; i < services.length; i++) {
+            if (services[i].checked) {
+                break;
+            }
+            if (i === services.length - 1) {
+                alert('请至少选择一项服务');
+                return false;
+            }
+        }
+
+        const dateInput = document.getElementsByName('date')[0];
+        const startTimeInput = document.getElementsByName('start')[0];
+        const endTimeInput = document.getElementsByName('end')[0];
+        const startTime = new Date(dateInput.value + 'T' + startTimeInput.value);
+        const endTime = new Date(dateInput.value + 'T' + endTimeInput.value);
+        const now = new Date();
+        if (startTime < now || startTime >= endTime) {
+            alert('请正确选择服务时间');
+            return false;
+        }
+
+        return true;
+    }
+</script>
+</body>

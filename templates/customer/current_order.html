@@ -1,0 +1,43 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>当前订单</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+<a href="./">返回</a>
+<h1>当前订单</h1>
+<br>
+{% if order %}
+    <ul>
+        <li>订单号码：{{ order.id }}</li>
+        <li>订单地址：{{ order.address }}</li>
+        <li>预约时间：{{ order.start_time }} - {{ order.end_time }}</li>
+        <li>预约项目：{{ order.services }}</li>
+        <li>联系电话：{{ order.phone }}</li>
+        <li>订单状态：{{ order.get_status_display }}</li>
+        <li>接单员工：{% if order.worker %}{{ order.worker }}{% else %}无{% endif %}</li>
+        <li>订单备注：{% if order.remark %}{{ order.remark }}{% else %}无{% endif %}</li>
+    </ul>
+    <br>
+    <button onclick="location.reload();">刷新状态</button>
+    {% if order.status == 0 %}
+        <form action="{% url 'customer' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="task" value="cancel_order">
+            <input type="submit" value="取消订单">
+        </form>
+    {% endif %}
+    {% if order.status == 1 %}
+        <form action="{% url 'customer' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="task" value="finish_order">
+            <input type="submit" value="确认完成">
+        </form>
+    {% endif %}
+{% else %}
+    <h2>没有订单</h2>
+{% endif %}
+</body>
+</html>

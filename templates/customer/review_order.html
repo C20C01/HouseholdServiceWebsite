@@ -1,0 +1,62 @@
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>评价订单</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+<a href="{{ next_url }}">返回</a>
+<h1>评价订单</h1>
+<ul>
+    <li>订单号码：{{ order.id }}</li>
+    <li>订单地址：{{ order.address }}</li>
+    <li>预约时间：{{ order.start_time }} - {{ order.end_time }}</li>
+    <li>预约项目：{{ order.services }}</li>
+    <li>订单备注：{% if order.remark %}{{ order.remark }}{% else %}无{% endif %}</li>
+    <li>服务员工：{{ order.worker }}</li>
+</ul>
+<form action="{% url 'customer' %}" method="post">
+    {% csrf_token %}
+    <label>
+        服务态度：
+        <select name="attitude_score">
+            <option value="5">5分</option>
+            <option value="4">4分</option>
+            <option value="3">3分</option>
+            <option value="2">2分</option>
+            <option value="1">1分</option>
+        </select>
+        <br>
+        服务质量：
+        <select name="quality_score">
+            <option value="5">5分</option>
+            <option value="4">4分</option>
+            <option value="3">3分</option>
+            <option value="2">2分</option>
+            <option value="1">1分</option>
+        </select>
+        <br>
+        总体评价：
+        <select name="overall_score">
+            <option value="5">5分</option>
+            <option value="4">4分</option>
+            <option value="3">3分</option>
+            <option value="2">2分</option>
+            <option value="1">1分</option>
+        </select>
+        <br>
+        <br>
+        文本评价[非必填项]：
+        <br>
+        <textarea name="comment" rows="5" cols="30" style="resize: none;"></textarea>
+        <br>
+        <br>
+        <input type="hidden" name="order_id" value="{{ order.id }}">
+        <input type="hidden" name="next" value="{{ next_url }}">
+        <input type="hidden" name="task" value="review_order">
+        <input type="submit" value="提交">
+    </label>
+</form>
+</body>
+</html>

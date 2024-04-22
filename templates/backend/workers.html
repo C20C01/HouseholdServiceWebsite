@@ -1,0 +1,38 @@
+{% load static %}
+<html lang="en">
+<head>
+    <title>后台</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+<a href="./">返回</a>
+<h1>员工信息</h1>
+{% block content %}
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>用户名</th>
+            <th>服务态度</th>
+            <th>服务质量</th>
+            <th>总体评分</th>
+            <th>完成订单次数</th>
+            <th>正在工作</th>
+            <th>注册时间</th>
+            <th>上次登录时间</th>
+        </tr>
+        {% for worker, is_working in infos %}
+            <tr>
+                <td>{{ worker.id }}</td>
+                <td>{{ worker.username }}</td>
+                <td>{{ worker.worker_info.attitude_score|floatformat:2 }}</td>
+                <td>{{ worker.worker_info.quality_score|floatformat:2 }}</td>
+                <td>{{ worker.worker_info.overall_score|floatformat:2 }}</td>
+                <td>{{ worker.worker_info.order_success_count }}</td>
+                <td>{{ is_working }}</td>
+                <td>{{ worker.date_joined }}</td>
+                <td>{{ worker.last_login }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
+</body>
