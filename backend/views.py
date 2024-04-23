@@ -1,18 +1,11 @@
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.models import User
-from django.http import HttpResponse
 from django.shortcuts import render
 
 
-@login_required
+@user_passes_test(lambda u: u.is_superuser)
 def backend_request(request):
-    if not request.user.is_superuser:
-        return HttpResponse("Permission denied")
-
-    if request.method == 'GET':
-        return _handle_backend_get(request)
-
-    return render(request, "backend/index.html")
+    return _handle_backend_get(request)
 
 
 def _handle_backend_get(request):
